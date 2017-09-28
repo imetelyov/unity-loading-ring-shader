@@ -29,25 +29,25 @@ Shader "Custom/LoadingRing" {
 			#include "UnityCG.cginc"
 
 			struct appdata_t
-      {
-          float4 vertex   : POSITION;
-          float2 texcoord : TEXCOORD0;
-      };
+            {
+                float4 vertex   : POSITION;
+                float2 texcoord : TEXCOORD0;
+            };
 
-      struct v2f
-      {
-          float4 vertex   : SV_POSITION;
-          half2 texcoord  : TEXCOORD0;
-      };
+            struct v2f
+            {
+                float4 vertex   : SV_POSITION;
+                half2 texcoord  : TEXCOORD0;
+            };
 			
 			v2f vert(appdata_t IN)
-      {
-          v2f OUT;
-          OUT.vertex = UnityObjectToClipPos(IN.vertex);
-          OUT.texcoord = IN.texcoord;
-
-          return OUT;
-      }
+            {
+                v2f OUT;
+                OUT.vertex = UnityObjectToClipPos(IN.vertex);
+                OUT.texcoord = IN.texcoord;
+                
+                return OUT;
+            }
 			
 			#define M_PI 3.1415
 
@@ -76,24 +76,24 @@ Shader "Custom/LoadingRing" {
 			fixed4 _RingColor;
 
 			fixed4 frag(v2f IN) : SV_Target
-      {
-          // координаты текущей точки относительно координат картинки
-          // от 0 до 1 по каждой стороне
-          float2 uv = IN.texcoord;
-
-          fixed4 c = _RingColor;
-
-          // кольцо, радиусом от 0.4 до 0.5 половины длины картинки
-          // определяется полупрозрачностью.
-          // (0.5, 0.5) = центр изображения
-          float alpha = movingRing(uv - float2(0.5, 0.5), 0.4, 0.5); 
-
-          // переназначаем значение полупрозрачности для точки
-          c.a = alpha;
-
-          return c;
-      }
-      ENDCG
+            {
+                // координаты текущей точки относительно координат картинки
+				// от 0 до 1 по каждой стороне
+				float2 uv = IN.texcoord;
+				
+				fixed4 c = _RingColor;
+				
+				// кольцо, радиусом от 0.4 до 0.5 половины длины картинки
+				// определяется полупрозрачностью.
+				// (0.5, 0.5) = центр изображения
+				float alpha = movingRing(uv - float2(0.5, 0.5), 0.4, 0.5); 
+				
+				// переназначаем значение полупрозрачности для точки
+				c.a = alpha;
+				
+				return c;
+            }
+        ENDCG
 		}
 	}
 }
